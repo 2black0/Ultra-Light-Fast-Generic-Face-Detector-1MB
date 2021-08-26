@@ -55,8 +55,10 @@ predictor = backend.prepare(predictor, device="CPU")  # default CPU
 ort_session = ort.InferenceSession(onnx_path)
 input_name = ort_session.get_inputs()[0].name
 
-cap = cv2.VideoCapture("/home/linzai/Videos/video/16_6.MP4")  # capture from camera
-
+cap = cv2.VideoCapture(2)  # capture from camera
+cap.set(3, 640)
+cap.set(4, 480)
+        
 threshold = 0.7
 
 sum = 0
