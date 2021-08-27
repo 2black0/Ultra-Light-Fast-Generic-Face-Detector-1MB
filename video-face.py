@@ -16,7 +16,8 @@ parser.add_argument('--threshold', default=0.7, type=float, help='score threshol
 parser.add_argument('--candidate_size', default=1000, type=int, help='nms candidate size')
 parser.add_argument('--fps_count', default=False, type=bool, help='fps counter')
 parser.add_argument('--path', default="imgs", type=str, help='imgs dir')
-parser.add_argument('--test_device', default="cuda:0", type=str, help='cuda:0 or cpu')
+parser.add_argument('--test_device', default="cpu", type=str, help='cuda:0 or cpu')
+parser.add_argument('--cam_source', type=int, default=2, help='99 for Tello or 0-3 for webcam')
 parser.add_argument('--video_path', default="/home/linzai/Videos/video/16_1.MP4", type=str, help='path of video')
 args = parser.parse_args()
 
@@ -32,7 +33,7 @@ label_path = "./models/voc-model-labels.txt"
 net_type = args.net_type
 
 # cap = cv2.VideoCapture(args.video_path)  # capture from video
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(args.cam_source)
 cap.set(3, 640)
 cap.set(4, 480)
 
