@@ -83,7 +83,7 @@ while True:
     timer.start()
     boxes, labels, probs = predictor.predict(image, candidate_size / 2, threshold)
     interval = timer.end()
-    print('Time: {:.6f}s, Detect Objects: {:d}.'.format(interval, labels.size(0)))
+    #print('Time: {:.6f}s, Detect Objects: {:d}.'.format(interval, labels.size(0)))
     
     for i in range(boxes.size(0)):
         box = boxes[i, :]
@@ -92,7 +92,7 @@ while True:
         cv2.putText(orig_image, label, (int(box[0]), int(box[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         
     orig_image = cv2.resize(orig_image, None, None, fx=0.8, fy=0.8)
-    sum += boxes.size(0)
+    #sum += boxes.size(0)
     cv2.imshow('Object Detection', orig_image)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -100,4 +100,4 @@ while True:
     
 cap.release()
 cv2.destroyAllWindows()
-print("all face num:{}".format(sum))
+#print("all face num:{}".format(sum))
