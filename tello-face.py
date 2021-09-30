@@ -48,11 +48,13 @@ def main():
     threshold = args.threshold
 
     if net_type == 'slim':
-        model_path = "models/pretrained/version-slim-320.pth"
+        #model_path = "models/pretrained/version-slim-320.pth"
+        model_path = "models/pretrained/version-slim-640.pth"
         net = create_mb_tiny_fd(len(class_names), is_test=True, device=test_device)
         predictor = create_mb_tiny_fd_predictor(net, candidate_size=candidate_size, device=test_device)
     elif net_type == 'RFB':
-        model_path = "models/pretrained/version-RFB-320.pth"
+        #model_path = "models/pretrained/version-RFB-320.pth"
+        model_path = "models/pretrained/version-RFB-640.pth"
         net = create_Mb_Tiny_RFB_fd(len(class_names), is_test=True, device=test_device)
         predictor = create_Mb_Tiny_RFB_fd_predictor(net, candidate_size=candidate_size, device=test_device)
     else:
@@ -103,7 +105,10 @@ def main():
             cent_box_X = int((int(box[3])-int(box[1]))/2)+int(box[0])
             cent_box_Y = int((int(box[2])-int(box[0]))/2)+int(box[1])
             #print(cent_X, cent_Y, cent_box_X, cent_box_Y)
-            
+            x=int(box[0])
+            y=int(box[1])
+            h=int(box[2])-int(box[0])
+            w=int(box[3])-int(box[1])
             error = calculateError(cent_X, cent_Y, sizes, cent_box_X, cent_box_Y, int(box[2])-int(box[0]))
             
             '''
@@ -120,6 +125,9 @@ def main():
             cv2.circle(orig_image, (cent_box_X, cent_box_Y), 2, (0, 255, 0), 2)
             cv2.rectangle(orig_image, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (0, 255, 0), 4)
             cv2.putText(orig_image, label, (int(box[0]), int(box[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+            cv2.line(orig_image, (320, 240), (int((w/2)+x), int((h/2)+y)), (0, 0, 255), 2)
+            #cv2.line(orig_image, (320, 240), (int((int(box[3])-int(box[1]))/2)+int(box[0])), (int((int(box[2])-int(box[0]))/2)+int(box[1]))), (0, 0, 255), 2)
+
             
         orig_image = cv2.resize(orig_image, None, None, fx=0.8, fy=0.8)
         #sum += boxes.size(0)
